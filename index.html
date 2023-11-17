@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: 'oblique';
+            background: linear-gradient(to bottom, #9796f0, #fbc7d4);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: purple;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #ccc;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color:  #E3D4E1;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        li.completed {
+            background: linear-gradient(to bottom, #c0c0c0, #a0a0c0);
+        }
+
+        li .task {
+            flex: 1;
+        }
+
+        li .complete-delete-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        li .complete-button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        li .delete-button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+
+        li .complete-button:hover {
+            background-color: #33aa33;
+        }
+
+        li .delete-button:hover {
+            background-color: #ff5555;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List Application</h1>
+
+    <form method="POST">
+        <label for="task">Enter a task:</label>
+        <input type="text" id="task" name="task" required>
+        <button type="submit" name="add_task">Add Task</button>
+    </form>
+
+    <ul>
+        {% for index, task, completed in tasks %}
+            <li class="{% if completed %}completed{% endif %}">
+            <div class="task">{{ index }}. {{ task }}</div>
+                {% if completed %}
+                    <span class="completed-task">&#10004;</span>
+                {% else %}
+                    <form method="POST" style="display: inline;">
+                        <button class="complete-button" type="submit" name="complete_task" value="{{ index }}">Complete</button>
+                    </form>
+                    <form method="POST" style="display: inline;">
+                        <button class="delete-button" type="submit" name="delete_task" value="{{ index }}">Delete</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
